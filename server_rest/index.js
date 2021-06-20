@@ -7,10 +7,10 @@ const db = require('./db/index')
 const createEmployeeTable = require('./db/EmployeeStorage')
 
 app.get('/', async(req, res) => {
-    res.send("Hello World mas oke deh")
+    res.send("Cukup jalankna app.listen(PORT.....) dibawah dirubah")
 })
 
-//Inget agar json pada method post bisa maka gunakan ini
+//Inget agar json pada method post dapat digunakan, maka gunakan ini
 app.use(express.json())
 
 app.post('/api/employee', async(req, res, next) => {
@@ -63,7 +63,7 @@ app.get('/api/employee', async(req, res, next) => {
 })
 
 
-
+// Gunakan salah satu dari app.listen dibawah ini
 // app.listen(PORT, () => {
 //     console.log(`listen to port ${PORT}`)
 // })
