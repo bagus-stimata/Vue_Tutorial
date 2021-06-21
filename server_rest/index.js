@@ -67,6 +67,7 @@ app.get('/api/employee', async(req, res, next) => {
 // app.listen(PORT, () => {
 //     console.log(`listen to port ${PORT}`)
 // })
+
 app.listen(PORT, async() => {
     try {
         await createEmployeeTable()
