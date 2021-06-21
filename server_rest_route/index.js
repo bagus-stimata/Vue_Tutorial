@@ -4,10 +4,11 @@ const PORT = 3000
 
 
 // const db = require('./db/index') sudah tidak dipakai
-const createEmployeeTable = require('./db/EmployeeStorage')
+const createTables = require('./db/EmployeeStorage')
 
 const employee = require('./router/employee')
-app.use('/api/employee', employee) //apa pun http method yang mengandung /api/employe maka jalankan employee.js
+//--> apa pun http method yang mengandung /api/employe maka jalankan employee.js
+app.use('/api/employee', employee) 
 
 
 app.get('/', async(req, res) => {
@@ -23,7 +24,7 @@ app.use(express.json())
 // })
 app.listen(PORT, async() => {
     try {
-        await createEmployeeTable()
+        await createTables()
         console.log(`listen to port ${PORT}`)
     } catch (error) {
         console.error(error)
