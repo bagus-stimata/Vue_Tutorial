@@ -7,7 +7,7 @@ const db = require('./db/index')
 const createEmployeeTable = require('./db/EmployeeStorage')
 
 app.get('/', async(req, res) => {
-    res.send("Cukup jalankna app.listen(PORT.....) dibawah dirubah")
+    res.send("Cukup jalankan app.listen(PORT.....) dibawah dirubah")
 })
 
 //Inget agar json pada method post dapat digunakan, maka gunakan ini
