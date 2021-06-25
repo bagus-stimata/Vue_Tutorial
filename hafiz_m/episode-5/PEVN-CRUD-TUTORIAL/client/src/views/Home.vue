@@ -1,12 +1,18 @@
 <template>
-  <div class="home">
-    <h1>Home Page</h1>
-  </div>
+<div>
+  <EmployeeTable />
+</div>
 </template>
 
 <script>
+import EmployeeTable from './components/EmployeeTable'
 
 export default {
   name: 'Home'
+  ,
+  components:{
+    EmployeeTable
+  }
+
 }
 </script>
