@@ -3,7 +3,6 @@
   <v-container>
     <v-row>
       <v-col>
-        {{info}}
       </v-col>
     </v-row>
     <v-row>
@@ -19,9 +18,12 @@
 
     <v-row>
       <v-col>
+
+          <!-- bagian dari items adalah item. ini merupakan reserved word -->
+        
         <v-data-table
           :headers="headers"
-          :items="employees"
+          :items="employees" 
           :search="search"
         >
         
@@ -30,17 +32,32 @@
                         <v-toolbar flat>
                             <v-dialog v-model="dialogDelete" max-width="500px">
                                 <v-card>
-                                    <v-card-title class="headline">Serius mau di delete ?</v-card-title>
+                                    <v-card-title class="headline">Do you want to delete this data ?</v-card-title>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn color="primary" @click="closeDelete">Cancel</v-btn>
-                                        <v-btn color="friendly" @click="deleteItemConfirm">Ok</v-btn>
+                                        <v-btn color="primary" @click="deleteItemConfirm">Ok</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
                         </v-toolbar>
+
+                        <v-toolbar flat>
+                            <v-dialog v-model="dialogDelete2" max-width="500px">
+                                <v-card>
+                                    <v-card-title class="headline">Di hapus kah kak ?</v-card-title>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="primary" @click="closeDelete">Cancel</v-btn>
+                                        <v-btn color="primary" @click="deleteItemConfirm">Ok</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                        </v-toolbar>
+
                     </template>
 
+                    
                     <!-- Actions colom -->
                     <template v-slot:[`item.actions`]="{ item }">
                         <v-icon
@@ -49,11 +66,23 @@
                         >
                             mdi-pencil
                         </v-icon>
+
                         <v-icon
                             @click="deleteItem(item)"
                         >
                             mdi-delete
                         </v-icon>
+                    </template>
+
+
+
+                    <template v-slot:[`item.actions_2`] = "{ item2 }">
+                        <v-icon
+                            @click="deleteItem2(item2)"
+                        >
+                          mdi-delete-circle
+                        </v-icon>
+
                     </template>
 
         
@@ -73,6 +102,7 @@
       return {
         search: '',
         dialogDelete: false,
+        dialogDelete2: false,
         selectedItemIndex: -1,
         headers: [
           { text: 'ID', value: 'id' },
@@ -80,7 +110,8 @@
           ,
           // { text: 'Gender', value: 'gender' },
           // { text: 'Department', value: 'departement' },
-          { text: 'Actions', value: 'actions' }
+          { text: 'Actions', value: 'actions' },
+          { text: 'Actions2', value: 'actions_2' }
         ],
          // Employees data dummies
             employees: [
@@ -136,8 +167,17 @@
             this.dialogDelete = true
             // console.log(this.selectedItemIndex)
         },
+
+        deleteItem2(item2){
+            console.log(item2)
+            this.selectedItemIndex = this.employees.indexOf(item2)
+            // this.dialogDelete2 = true
+            console.log(this.selectedItemIndex)
+        },
+
         closeDelete(){
             this.dialogDelete = false
+            this.dialogDelete2 = false
             this.$nextTick(() => {
                 this.selectedItemIndex = -1
             })
@@ -145,12 +185,29 @@
         deleteItemConfirm(){
             this.employees.splice(this.selectedItemIndex, 1)
             this.closeDelete()
+
+            console.log(this.selectedItemIndex)
+
+            // const deleteEmployee = this.employees[this.selectedItemIndex]            
+            // console.log(deleteEmployee.id)
+
+            // axios
+            //     .delete(`http://localhost:3000/api/employees/${deleteEmployee.id}`)
+            //     .then(response => {
+            //         this.employees.splice(this.selectedItemIndex, 1)
+            //         this.closeDelete()
+            //         console.log("DELETE SUCCESS", response.data)
+            //     })
+            //     .catch(error => {
+            //         console.log(error)
+            //     })
+
         }
     },
    mounted(){
         axios
-            .get('http://localhost:8085/getListEmployee')
-            // .get('http://localhost:3000/api/employees')
+            // .get('http://localhost:8085/getListEmployee')
+            .get('http://localhost:3000/api/employees')
             .then(response => {
                 this.employees = response.data
                 // console.log(response.data)
