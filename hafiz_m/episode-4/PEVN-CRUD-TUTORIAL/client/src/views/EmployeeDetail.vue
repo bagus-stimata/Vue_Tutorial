@@ -1,10 +1,14 @@
 <template>
     <div>Hello World Employee Detil
 
-        <div v-if="employee" class="content">
+        <div v-if="employee" class="content ml-16">
         <h2>{{ employee.id }}</h2>
         <p>{{ employee.name }}</p>
+        <p>{{ employee.gender }}</p>
+        <p>{{ employee.departement }}</p>
         </div>
+
+
 
     </div>
     
