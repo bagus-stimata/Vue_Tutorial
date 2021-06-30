@@ -57,9 +57,16 @@
 
                     </template>
 
-                    
+                    <!-- Employee Name (Link) -->
+                    <template v-slot:[`item.name`]="{ item }">
+                        <router-link :to="`/details/${item.id}/${linkNeated(item.name)}`">
+                            {{ item.name }}
+                        </router-link>
+                    </template>
+
+
                     <!-- Actions colom -->
-                    <template v-slot:[`item.actions`]="{ item }">
+                    <template v-slot:[`item.actions1`]="{ item }">
                         <v-icon
                             
                             class="mr-2"
@@ -68,7 +75,7 @@
                         </v-icon>
 
                         <v-icon
-                            @click="deleteItem(item)"
+                            @click="deleteItem1(item)"
                         >
                             mdi-delete
                         </v-icon>
@@ -76,9 +83,9 @@
 
 
 
-                    <template v-slot:[`item.actions_2`] = "{ item2 }">
+                    <template v-slot:[`item.actions2`] = "{ item }">
                         <v-icon
-                            @click="deleteItem2(item2)"
+                            @click="deleteItem2(item)"
                         >
                           mdi-delete-circle
                         </v-icon>
@@ -110,8 +117,8 @@
           ,
           // { text: 'Gender', value: 'gender' },
           // { text: 'Department', value: 'departement' },
-          { text: 'Actions', value: 'actions' },
-          { text: 'Actions2', value: 'actions_2' }
+          { text: 'Actions1', value: 'actions1' },
+          { text: 'Actions2', value: 'actions2' }
         ],
          // Employees data dummies
             employees: [
@@ -161,18 +168,22 @@
     },
 
    methods: {
-        deleteItem(item){
+       linkNeated(link){
+           return link.replace(/\s+/g, '-').toLocaleLowerCase()
+       },
+        deleteItem1(item){
+            
             console.log(item)
-            this.selectedItemIndex = this.employees.indexOf(item)
+            this.selectedItemIndex = this.employees.indexOf(item)            
             this.dialogDelete = true
             // console.log(this.selectedItemIndex)
         },
 
         deleteItem2(item2){
-            console.log(item2)
+            console.log( ">>" + item2) //pemanggilnya harus menggunakan nana parameter item
             this.selectedItemIndex = this.employees.indexOf(item2)
-            // this.dialogDelete2 = true
-            console.log(this.selectedItemIndex)
+            this.dialogDelete2 = true
+            console.log( "##" + this.selectedItemIndex)
         },
 
         closeDelete(){
@@ -183,10 +194,23 @@
             })
         },
         deleteItemConfirm(){
-            this.employees.splice(this.selectedItemIndex, 1)
+
+            const deletedEmployee = this.employees[this.selectedItemIndex]
+
+            axios
+                .delete(`http://localhost:3000/api/employees/${deletedEmployee.id}`)
+                .then( response => {
+                    this.employees.splice(this.selectedItemIndex, 1)        
+                    this.closeDelete
+                    console.log("DELETE SUCCESS >> ", response.data)
+                })
+                .catch( error => {
+                    console.log(error)
+                })
+
+            
             this.closeDelete()
 
-            console.log(this.selectedItemIndex)
 
             // const deleteEmployee = this.employees[this.selectedItemIndex]            
             // console.log(deleteEmployee.id)

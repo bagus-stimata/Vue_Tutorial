@@ -34,6 +34,13 @@
                         </v-toolbar>
                     </template>
 
+                    <!-- Employee Name (Link) -->
+                    <template v-slot:[`item.name`]="{ item }">
+                        <router-link :to="`/details/${item.id}/${linkNeated(item.name)}`">
+                            {{ item.name }}
+                        </router-link>
+                    </template>
+
 
                     <!-- Actions colom -->
                     <template v-slot:[`item.actions`]="{ item }">
@@ -49,6 +56,13 @@
                             mdi-delete
                         </v-icon>
                     </template>
+
+                    <!-- <template v-slot:[`item.name`] = "{ item }"> 
+                        <router-link :to="`/details/${item.id}/${item.name}`">
+                            {{ item.name }}
+                        </router-link>
+                    </template> -->
+
                 </v-data-table>
             </v-col>
         </v-row>
