@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import EmployeeDetail from '../views/EmployeeDetail.vue'
 // import EmployeeRegistration from '../views/EmployeeRegistration.vue'
+import EmployeeEdit from '../views/EmployeeEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,10 @@ const routes = [{
     {
         path: '/details/:id/:name',
         component: EmployeeDetail
+    },
+    {
+        path: '/edit/:id/:name',
+        component: EmployeeEdit
     }
 
 ]

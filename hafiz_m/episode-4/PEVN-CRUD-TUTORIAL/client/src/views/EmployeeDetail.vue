@@ -30,7 +30,7 @@ export default {
     methods: {
         fecthData(){
             axios
-                .get(`http://localhost:3000/api/employees/${this.$route.params.id}`)
+                .get(`http://192.168.1.30:3000/api/employees/${this.$route.params.id}`)
                 .then( response => {
                     this.employee = response.data[0]
                 })
